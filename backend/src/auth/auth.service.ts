@@ -1,11 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
-
+import { PrismaService } from '../prisma/prisma.service';
+import * as bcrypt from 'bcrypt';
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+  constructor(private prisma: PrismaService) {}
+  async create(createAuthDto: CreateAuthDto) {
+    const user = await this.prisma.user.create({
+      data: {
+        email: createAuthDto.email,
+        hash: await bcrypt.hash(createAuthDto.password, 10), //DTO password ->  DBではhash
+        name: createAuthDto.name,
+      },
+    });
+    return user;
   }
 
   findAll() {
@@ -22,5 +31,17 @@ export class AuthService {
 
   remove(id: number) {
     return `This action removes a #${id} auth`;
+  }
+
+  async validatePassword(password: string, hash: string): Promise<boolean> {
+    return bcrypt.compare(password, hash);
+    //passwordの検証
+  }
+
+  async findByEmail(email: string) {
+    return this.prisma.user.findUnique({
+      where: { email },
+    });
+    //emailでユーザーを検索いなかったらnullが帰ってくる
   }
 }
