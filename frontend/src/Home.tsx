@@ -14,7 +14,7 @@ export default function Home() {
                     {/* 左側: 投稿作成フォーム */}
                     <div className="w-1/3">
                         <div className="bg-white border rounded-lg p-4">
-                            <h2 className="text-lg font-semibold mb-4">投稿を作成</h2>
+                            <h2 className="text-lg font-semibold mb-4 text-black">投稿を作成</h2>
                             <form>
                                 <textarea
                                     placeholder="content"
@@ -22,7 +22,7 @@ export default function Home() {
                                 />
                                 <button
                                     type="submit"
-                                    className="btn btn-primary w-full mt-4"
+                                    className="btn btn-accent bg-info w-full mt-2 z-10 hover:bg-accent/80 p-2"
                                 >
                                     POST
                                 </button>
@@ -33,7 +33,7 @@ export default function Home() {
                     {/* 右側: 投稿一覧 */}
                     <div className="w-2/3">
                         <div className="bg-white border rounded-lg p-6">
-                            <h2 className="text-lg font-semibold mb-4">Post List</h2>
+                            <h2 className="text-lg font-semibold mb-4 text-black">Post List</h2>
                             <div className="space-y-4">
                                 {/* サンプル投稿 */}
                                 <div className="border-b pb-4">
