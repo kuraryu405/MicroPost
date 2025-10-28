@@ -2,8 +2,18 @@ import Header from './Header';
 // import Footer from './Footer';
 import Post from './Post';
 import PostList from './PostList';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!localStorage.getItem('token')) {
+      navigate('/login');
+    }
+  }, [navigate]);
+
   return (
     <>
       <div className="bg-white min-h-screen w-screen">

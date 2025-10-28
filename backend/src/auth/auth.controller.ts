@@ -13,8 +13,8 @@ export class AuthController {
 
   @Post('login')
   login(@Body() loginDto: LoginDto) {
-    const token = this.authService.AuthUser(loginDto.email, loginDto.password);
-    return token.then((access_token) => ({ access_token }));
+    const result = this.authService.AuthUser(loginDto.email, loginDto.password);
+    return result.then(({ token, user }) => ({ access_token: token, user }));
   }
 
 

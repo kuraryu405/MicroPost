@@ -1,12 +1,19 @@
 import { useState, type FormEvent } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            navigate('/');
+        }
+    }, [navigate]);
 
     const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -18,6 +25,7 @@ export default function Login() {
                 return;
             }
             localStorage.setItem('token', token);
+            localStorage.setItem('userId', response.data.user.id);
             setMessage('ログイン成功！');
             navigate('/');
         } catch (error) {

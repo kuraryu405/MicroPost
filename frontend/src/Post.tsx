@@ -1,12 +1,45 @@
+import { useState } from 'react';
+import axios from 'axios';
+
+
 export default function Post() {
+  const [content, setContent] = useState('');
+
+  const handlePost = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const token = localStorage.getItem('token');
+    const userIdStr = localStorage.getItem('userId');
+    const userId = userIdStr ? Number(userIdStr) : NaN;
+
+
+    if (!content.trim()) {
+      alert('内容を入力してください');
+      return;
+    }
+
+    try {
+      await axios.post(
+        'http://localhost:3000/post',
+        { userId, content },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setContent('');
+    } catch (error) {
+      console.error(error);
+      alert('投稿に失敗しました');
+    }
+  }
+
   return (
     <div className="w-1/3">
       <div className="bg-white border rounded-lg p-4">
         <h2 className="text-lg font-semibold mb-4 text-black">投稿を作成</h2>
-        <form>
+        <form onSubmit={handlePost}>
           <textarea
             placeholder="content"
             className="textarea textarea-bordered w-full min-h-[150px] resize-none"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
           />
           <button
             type="submit"

@@ -23,7 +23,10 @@ export class AuthService {
 
 
 
-  async AuthUser(email: string, password: string): Promise<string> {
+  async AuthUser(
+    email: string,
+    password: string,
+  ): Promise<{ token: string; user: Pick<User, 'id' | 'email' | 'name'> }> {
     if (!email || !password) {
       throw new UnauthorizedException('Invalid credentials');
     }
@@ -42,6 +45,11 @@ export class AuthService {
     // トークンを生成
     const payload = { userId: user.id, email: user.email };
     const token = this.jwtService.sign(payload);
-    return token;
+    const publicUser: Pick<User, 'id' | 'email' | 'name'> = {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+    };
+    return { token, user: publicUser };
   }
 }
