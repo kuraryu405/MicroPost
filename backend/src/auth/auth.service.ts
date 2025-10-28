@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { PrismaService } from '../prisma/prisma.service';
@@ -23,25 +23,25 @@ export class AuthService {
 
 
 
-  async AuthUser(email: string, password: string): Promise<{user: User | null, token: string | null}> {
+  async AuthUser(email: string, password: string): Promise<string> {
     if (!email || !password) {
-      return { user: null, token: null };
+      throw new UnauthorizedException('Invalid credentials');
     }
     // emailでユーザーを検索いなかったらnullが帰ってくる
     const user = await this.prisma.user.findUnique({
       where: { email },
     });
     if (!user) {
-      return { user: null, token: null };
+      throw new UnauthorizedException('Invalid credentials');
     }
     // パスワードでの認証
     const isPasswordValid = await bcrypt.compare(password, user.hash);
     if (!isPasswordValid) {
-      return { user: null, token: null };
+      throw new UnauthorizedException('Invalid credentials');
     }
     // トークンを生成
     const payload = { userId: user.id, email: user.email };
     const token = this.jwtService.sign(payload);
-    return { user: user, token: token };
+    return token;
   }
 }
