@@ -15,7 +15,16 @@ export class PostService {
   }
 
   findAll() {
-    return this.prisma.post.findMany();
+    return this.prisma.post.findMany({
+      orderBy: { createdAt: 'desc' },
+      include: {
+        author: {
+          select: {
+            name: true,
+          },
+        }
+      },
+    });
   }
 
 }

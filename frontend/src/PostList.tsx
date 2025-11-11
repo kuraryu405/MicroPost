@@ -1,32 +1,47 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+
+type Post = {
+  id: number;
+  author: {
+    name: string;
+  };
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+
+
 export default function PostList() {
+  const [posts, setPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:3000/post').then((response) => {
+      setPosts(response.data);
+    });
+  }, []);
+
   return (
     <div className="w-2/3">
     <div className="bg-white border rounded-lg p-6">
       <h2 className="text-lg font-semibold mb-4 text-black">
         Post List
       </h2>
-      <div className="space-y-4">
-        {/* サンプル投稿 */}
-        <div className="border-b pb-4">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-sm text-gray-600">user 1</span>
-          </div>
-          <p className="text-gray-800">サンプル投稿の内容です</p>
-          <span className="text-gray-400 text-xs">
-            2024/1/1 12:00:00
-          </span>
-        </div>
-        <div className="border-b pb-4">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-sm text-gray-600">user 2</span>
-          </div>
-          <p className="text-gray-800">別のユーザーの投稿です</p>
-          <span className="text-gray-400 text-xs">
-            2024/1/1 11:00:00
-          </span>
-        </div>
+      <div className="space-y-4 text-black">
+      <ul>
+        {posts.map((post) => (
+          <li key={post.id}>
+            <div>投稿者: {post.author.name}</div>
+            <div>ツイート: {post.content}</div>
+            <div>投稿日時: {post.createdAt}</div>
+          </li>
+
+        ))}
+      </ul>
+      </div>
+
       </div>
     </div>
-  </div>
   );
 }

@@ -26,6 +26,7 @@ export default function Login() {
             }
             localStorage.setItem('token', token);
             localStorage.setItem('userId', response.data.user.id);
+            localStorage.setItem('name', response.data.user.name);
             setMessage('ログイン成功！');
             navigate('/');
         } catch (error) {
@@ -47,7 +48,7 @@ export default function Login() {
             <div className="glass w-1/2 h-1/2 rounded-2xl flex justify-center items-center">
                 <form className="form-control w-full max-w-lg" onSubmit={handleLogin}>
                     <div className="form-group">
-                        <label htmlFor="email" className="label text-black text-lg">
+                        <label htmlFor="email" className="label text-white text-lg">
                             Email
                         </label>
                         <input
@@ -58,7 +59,7 @@ export default function Login() {
                             onChange={(e) => setEmail(e.target.value)} // ←状態更新
                             required
                         />
-                        <label htmlFor="password" className="label mt-4 text-black text-lg">
+                        <label htmlFor="password" className="label mt-4 text-white text-lg">
                             Password
                         </label>
                         <input
