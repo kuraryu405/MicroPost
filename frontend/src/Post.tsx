@@ -33,7 +33,7 @@ export default function Post() {
   return (
     <div className="w-1/3">
       <div className="bg-white border rounded-lg p-4">
-        <h2 className="text-lg font-semibold mb-4 text-black">投稿を作成 {localStorage.getItem('name')}</h2>
+        <h2 className="text-lg font-semibold mb-4 text-black">{localStorage.getItem('name')} として投稿</h2>
         <form onSubmit={handlePost}>
           <textarea
             placeholder="content"
