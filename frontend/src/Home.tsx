@@ -32,13 +32,14 @@ export default function Home() {
       setPosts(response.data);
     });
   }, []);
+
   return (
     <>
       <div className="bg-white min-h-screen w-screen">
         <Header />
 
         <div className="container mx-auto px-6 flex gap-6">
-          <Post />
+          <Post setPosts={setPosts}/>
 
           {/* 右側: 投稿一覧 */}
           <PostList posts={posts} />

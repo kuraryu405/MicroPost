@@ -1,16 +1,35 @@
 import { useState } from 'react';
 import axios from 'axios';
 
+type Post = {
+  id: number;
+  author: {
+    name: string;
+  };
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+};
 
-export default function Post() {
+type PostProps = {
+  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+};
+
+export default function Post({ setPosts }: PostProps) {
   const [content, setContent] = useState('');
 
   const handlePost = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
     const userIdStr = localStorage.getItem('userId');
-    const userId = userIdStr ? Number(userIdStr) : NaN;
+    const userId = Number(userIdStr);
 
+    
+
+    const fetchPosts = async () => {
+      const response = await axios.get('http://localhost:3000/post');
+      setPosts(response.data);
+    };
 
     if (!content.trim()) {
       alert('内容を入力してください');
@@ -24,6 +43,7 @@ export default function Post() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setContent('');
+      fetchPosts();
     } catch (error) {
       console.error(error);
       alert('投稿に失敗しました');
