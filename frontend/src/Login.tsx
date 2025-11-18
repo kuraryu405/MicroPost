@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { API_URL } from './config/api';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -18,7 +19,7 @@ export default function Login() {
     const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/auth/login', { email, password });
+            const response = await axios.post(`${API_URL}/auth/login`, { email, password });
             const token = response.data?.access_token;
             if (!token) {
                 setMessage('ログイン失敗: トークンが取得できませんでした');

@@ -2,20 +2,11 @@ import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
 import 'dayjs/locale/ja';
+import type { Post } from './types';
 
 dayjs.extend(timezone);
 dayjs.extend(utc);
 dayjs.locale('ja');
-
-type Post = {
-  id: number;
-  author: {
-    name: string;
-  };
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-};
 
 type PostListProps = {
   posts: Post[];

@@ -1,15 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
-
-type Post = {
-  id: number;
-  author: {
-    name: string;
-  };
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-};
+import type { Post } from './types';
+import { API_URL } from './config/api';
 
 type PostProps = {
   setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
@@ -24,8 +16,6 @@ export default function Post({ setPosts }: PostProps) {
     const userIdStr = localStorage.getItem('userId');
     const userId = Number(userIdStr);
 
-    
-
     const fetchPosts = async () => {
       const response = await axios.get('http://localhost:3000/post');
       setPosts(response.data);
@@ -38,7 +28,7 @@ export default function Post({ setPosts }: PostProps) {
 
     try {
       await axios.post(
-        'http://localhost:3000/post',
+        `${API_URL}/post`,
         { userId, content },
         { headers: { Authorization: `Bearer ${token}` } }
       );

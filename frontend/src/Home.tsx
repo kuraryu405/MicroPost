@@ -5,16 +5,8 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
-
-type Post = {
-  id: number;
-  author: {
-    name: string;
-  };
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-};
+import type { Post as PostType } from './types';
+import { API_URL } from './config/api';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -24,10 +16,10 @@ export default function Home() {
       navigate('/login');
     }
   }, [navigate]);
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<PostType[]>([]);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/post').then((response) => {
+    axios.get(`${API_URL}/post`).then((response) => {
       setPosts(response.data);
     });
   }, []);
