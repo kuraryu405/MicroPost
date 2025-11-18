@@ -44,8 +44,9 @@ export default function Login() {
     };
 
     return (
-        <div className="bg-[url(/images/background-login.jpeg)] bg-cover bg-center h-screen w-screen flex justify-center items-center">
+        <div className="bg-[url(/images/background.JPG)] bg-cover bg-center h-screen w-screen flex justify-center items-center">
             <div className="glass w-1/2 h-1/2 rounded-2xl flex justify-center items-center">
+
                 <form className="form-control w-full max-w-lg" onSubmit={handleLogin}>
                     <div className="form-group">
                         <label htmlFor="email" className="label text-white text-lg">

@@ -23,8 +23,8 @@ export default function PostList({ posts }: PostListProps) {
       <div className="space-y-4 text-black">
       <ul>
         {posts.map((post) => (
-          <li key={post.id} className="my-6">
-            <div className="relative flex flex-col bg-white shadow-sm border border-slate-200 rounded-lg w-96">
+          <li key={post.id} className="my-6 flex justify-center">
+            <div className="relative flex flex-col bg-white shadow-sm border border-slate-200 rounded-lg w-full max-w-2xl">
               <div className="p-4">
                 <p className="mb-2 text-slate-800 text-xl font-semibold">
                   {post.author.name}
