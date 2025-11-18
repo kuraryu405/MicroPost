@@ -1,5 +1,3 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react';
 
 type Post = {
   id: number;
@@ -11,17 +9,11 @@ type Post = {
   updatedAt: string;
 };
 
+type PostListProps = {
+  posts: Post[];
+};
 
-
-export default function PostList() {
-  const [posts, setPosts] = useState<Post[]>([]);
-
-  useEffect(() => {
-    axios.get('http://localhost:3000/post').then((response) => {
-      setPosts(response.data);
-    });
-  }, []);
-
+export default function PostList({ posts }: PostListProps) {
   return (
     <div className="w-2/3">
     <div className="bg-white border rounded-lg p-6">

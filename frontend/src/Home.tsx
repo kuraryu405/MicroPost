@@ -4,6 +4,18 @@ import Post from './Post';
 import PostList from './PostList';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import axios from 'axios';
+
+type Post = {
+  id: number;
+  author: {
+    name: string;
+  };
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+};
 
 export default function Home() {
   const navigate = useNavigate();
@@ -13,7 +25,13 @@ export default function Home() {
       navigate('/login');
     }
   }, [navigate]);
+  const [posts, setPosts] = useState<Post[]>([]);
 
+  useEffect(() => {
+    axios.get('http://localhost:3000/post').then((response) => {
+      setPosts(response.data);
+    });
+  }, []);
   return (
     <>
       <div className="bg-white min-h-screen w-screen">
@@ -23,7 +41,7 @@ export default function Home() {
           <Post />
 
           {/* 右側: 投稿一覧 */}
-          <PostList />
+          <PostList posts={posts} />
         </div>
       </div>
       
