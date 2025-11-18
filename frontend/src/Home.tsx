@@ -16,7 +16,7 @@ export default function Home() {
   const { posts, fetchPosts } = usePosts();
   return (
     <>
-      <div className="bg-white min-h-screen w-screen">
+      <div className="bg-white min-h-screen w-screen pt-28">
         <Header />
 
         <div className="container mx-auto px-6 flex gap-6">

@@ -11,13 +11,18 @@ export default function Header() {
   };
 
   return (
-    <header className="py-4 mb-6 border-b">
-    <div className="container mx-auto flex items-center justify-between px-6">
-      <h1 className="text-3xl font-bold text-blue-700 text-center">
-        Micro Post
-      </h1>
-      <button className="btn btn-accent bg-info text-white ml-4 mt-2 z-10 hover:bg-accent/80 p-2" onClick={handleLogout}>ログアウト</button>
-    </div>
-  </header>
+    <header className="fixed top-0 left-0 w-full z-50 bg-white border-b shadow-sm">
+      <div className="container mx-auto flex items-center justify-between px-6 py-4">
+        <h1 className="text-3xl font-bold text-blue-700 text-center">
+          Micro Post
+        </h1>
+        <button
+          className="btn btn-accent bg-info text-white ml-4 mt-2 z-10 hover:bg-accent/80 p-2"
+          onClick={handleLogout}
+        >
+          ログアウト
+        </button>
+      </div>
+    </header>
   );
 }
