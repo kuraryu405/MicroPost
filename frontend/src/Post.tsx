@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import axios from 'axios';
-import type { Post } from './types';
 import { API_URL } from './config/api';
 
 type PostProps = {
-  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  fetchPosts: () => Promise<void>;
 };
 
-export default function Post({ setPosts }: PostProps) {
+export default function Post({ fetchPosts }: PostProps) {
   const [content, setContent] = useState('');
 
   const handlePost = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -15,11 +14,6 @@ export default function Post({ setPosts }: PostProps) {
     const token = localStorage.getItem('token');
     const userIdStr = localStorage.getItem('userId');
     const userId = Number(userIdStr);
-
-    const fetchPosts = async () => {
-      const response = await axios.get('http://localhost:3000/post');
-      setPosts(response.data);
-    };
 
     if (!content.trim()) {
       alert('内容を入力してください');
@@ -33,7 +27,7 @@ export default function Post({ setPosts }: PostProps) {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setContent('');
-      fetchPosts();
+      await fetchPosts();
     } catch (error) {
       console.error(error);
       alert('投稿に失敗しました');
