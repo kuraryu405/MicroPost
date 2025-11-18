@@ -1,3 +1,11 @@
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
+import 'dayjs/locale/ja';
+
+dayjs.extend(timezone);
+dayjs.extend(utc);
+dayjs.locale('ja');
 
 type Post = {
   id: number;
@@ -35,7 +43,9 @@ export default function PostList({ posts }: PostListProps) {
               </div>
               <div className="mx-3 border-t border-slate-200 pb-3 pt-2 px-1">
                 <span className="text-sm text-slate-600 font-medium">
-                  {post.createdAt}
+                  {dayjs(post.createdAt)
+                  .tz('Asia/Tokyo')
+                  .format('YYYY/MM/DD HH:mm:ss')}
                 </span>
               </div>
             </div>

@@ -16,9 +16,6 @@ export default function Header() {
       <h1 className="text-3xl font-bold text-blue-700 text-center">
         Micro Post
       </h1>
-      {/* <p className="text-sm ml-4 text-black">
-        {localStorage.getItem('name')}
-      </p> */}
       <button className="btn btn-accent bg-info text-white ml-4 mt-2 z-10 hover:bg-accent/80 p-2" onClick={handleLogout}>ログアウト</button>
     </div>
   </header>
