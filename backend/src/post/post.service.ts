@@ -20,7 +20,7 @@ export class PostService {
       include: {
         author: {
           select: {
-            name: true,
+            name: true
           },
         }
       },

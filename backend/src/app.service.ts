@@ -5,9 +5,7 @@ import { PrismaService } from './prisma/prisma.service';
 export class AppService {
   constructor(private prisma: PrismaService) {}
 
-  getHello(): string {
-    return 'Hello World!';
-  }
+
   
   async getUser() {
     const user = await this.prisma.user.findMany();
