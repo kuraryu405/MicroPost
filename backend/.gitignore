@@ -107,5 +107,3 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# Prisma
-prisma/migrations/
