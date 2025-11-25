@@ -29,7 +29,7 @@ export class AuthService {
       },
     });
 
-    // パスワード情報を除外して返す
+    
     const { hash, ...result } = user;
     return result;
   }
