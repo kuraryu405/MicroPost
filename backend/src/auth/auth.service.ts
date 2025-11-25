@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { PrismaService } from '../prisma/prisma.service';
@@ -11,6 +11,16 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
   async create(createAuthDto: CreateAuthDto) {
+   
+    const existingUser = await this.prisma.user.findUnique({
+      where: { email: createAuthDto.email },
+    });
+
+    if (existingUser) {
+      throw new ConflictException('このメールアドレスは既に登録されています');
+    }
+
+  
     const user = await this.prisma.user.create({
       data: {
         email: createAuthDto.email,
@@ -18,7 +28,10 @@ export class AuthService {
         name: createAuthDto.name,
       },
     });
-    return user;
+
+    // パスワード情報を除外して返す
+    const { hash, ...result } = user;
+    return result;
   }
 
 
