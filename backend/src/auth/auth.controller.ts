@@ -12,9 +12,9 @@ export class AuthController {
   }
 
   @Post('login')
-  login(@Body() loginDto: LoginDto) {
-    const result = this.authService.AuthUser(loginDto.email, loginDto.password);
-    return result.then(({ token, user }) => ({ access_token: token, user }));
+  async login(@Body() loginDto: LoginDto) {
+    const { token, user } = await this.authService.AuthUser(loginDto.email, loginDto.password);
+    return { access_token: token, user };
   }
 
 
