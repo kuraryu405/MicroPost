@@ -11,27 +11,33 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
   async create(createAuthDto: CreateAuthDto) {
-   
-    const existingUser = await this.prisma.user.findUnique({
-      where: { email: createAuthDto.email },
-    });
+    try {
+      const existingUser = await this.prisma.user.findUnique({
+        where: { email: createAuthDto.email },
+      });
 
-    if (existingUser) {
-      throw new ConflictException('このメールアドレスは既に登録されています');
+      if (existingUser) {
+        throw new ConflictException('このメールアドレスは既に登録されています');
+      }
+
+      const user = await this.prisma.user.create({
+        data: {
+          email: createAuthDto.email,
+          hash: await bcrypt.hash(createAuthDto.password, 10), //DTO password ->  DBではhash
+          name: createAuthDto.name,
+        },
+      });
+
+      // パスワード情報を除外して返す
+      const { hash, ...result } = user;
+      return result;
+    } catch (error) {
+      console.error('Error creating user:', error);
+      if (error instanceof ConflictException) {
+        throw error;
+      }
+      throw new Error(`ユーザー作成に失敗しました: ${error.message}`);
     }
-
-  
-    const user = await this.prisma.user.create({
-      data: {
-        email: createAuthDto.email,
-        hash: await bcrypt.hash(createAuthDto.password, 10), //DTO password ->  DBではhash
-        name: createAuthDto.name,
-      },
-    });
-
-    
-    const { hash, ...result } = user;
-    return result;
   }
 
 
