@@ -64,7 +64,7 @@ export default function PostList({ posts, fetchPosts }: PostListProps) {
                         onChange={(e) => setEditingContent(e.target.value)}
                       />
                       <div className="flex gap-2">
-                        <button onClick={() => handleUpdatePost(post.id)} className="btn btn-sm btn-primary">
+                        <button onClick={() => handleUpdatePost(post.id)} className="btn btn-sm btn-primary text-black">
                           保存
                         </button>
                         <button onClick={() => setEditingPost(null)} className="btn btn-sm btn-ghost text-black">
