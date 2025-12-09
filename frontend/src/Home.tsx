@@ -23,10 +23,10 @@ export default function Home() {
           <Post fetchPosts={fetchPosts} />
 
           {/* 右側: 投稿一覧 */}
-          <PostList posts={posts} />
+          <PostList posts={posts} fetchPosts={fetchPosts} />
         </div>
       </div>
-      
+
     </>
   );
 }

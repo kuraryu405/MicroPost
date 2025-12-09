@@ -37,7 +37,11 @@ export default function Post({ fetchPosts }: PostProps) {
   return (
     <div className="w-1/3 sticky top-32 self-start">
       <div className="bg-white border rounded-lg p-4">
-        <h2 className="text-lg font-semibold mb-4 text-black">{localStorage.getItem('name')} として投稿</h2>
+        <h2 className="text-lg font-semibold mb-4 text-black">
+          {localStorage.getItem('name')}
+          <span className="text-sm text-gray-500 ml-2">(@{localStorage.getItem('userId')})</span>
+          として投稿
+        </h2>
         <form onSubmit={handlePost}>
           <textarea
             placeholder="content"
